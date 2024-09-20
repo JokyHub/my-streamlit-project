@@ -28,3 +28,19 @@ class RedditClient:
             return posts, upvotes
         except Exception as e:
             raise ValueError(f"Failed to fetch posts: {e}")
+    def fetch_trending_topics(self, limit=10):
+        """Fetch trending subreddits or posts on Reddit."""
+        trending_topics = []
+        try:
+            # Using Reddit's popular subreddits feature
+            for submission in self.reddit.subreddit("all").hot(limit=limit):
+                trending_topics.append({
+                    'title': submission.title,
+                    'subreddit': submission.subreddit.display_name,
+                    'score': submission.score,
+                    'url': submission.url
+                })
+            return trending_topics
+        except Exception as e:
+            raise ValueError(f"Failed to fetch trending topics: {e}")
+            return []

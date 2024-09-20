@@ -9,92 +9,66 @@ import os
 import plotly.express as px
 import plotly.graph_objects as go
 from dotenv import load_dotenv
-
-# Load environment variables (Optional: if you still want to use .env as a fallback)
+from pages.sentiment_page import sentiment_analysis_page  
+from pages.trend_page import trending_topics_page 
 load_dotenv()
-# Function to load custom CSS
+# Load custom CSS file
 def load_css():
-    # Path to the CSS file
-    css_path = "src/styles.css"  
-    
-    # Load the CSS file
-    with open(css_path) as f:
+    with open("src/styles.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-        
-# Call the function to load the CSS
+
+# Call this function at the beginning of your app
 load_css()
-# Initialize sentiment analyzer and visualizer
-analyzer = SentimentAnalyzer()
-visualizer = Visualizer()
 
-# Set up the checkbox to use default credentials
-use_default_credentials = st.checkbox("Use default credentials from praw.ini")
+st.markdown(
+    """
+    <style>
+    /* Example of some global styling to improve UI */
+    .stButton>button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-# App layout
-st.title("Reddit Sentiment Analysis Dashboard")
-st.write("Welcome to the Sentiment Analysis Dashboard. This app fetches posts from Reddit and analyzes their sentiments.")
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+# Selection box to navigate between the pages
+page = st.sidebar.selectbox(
+    "Choose a Page", 
+    ["Sentiment Analysis", "Trending Topics"]  # Add more pages here as needed
+)
+
+# Load and render the selected page
+if page == "Sentiment Analysis":
+    sentiment_analysis_page()  # Call the function that renders the Sentiment Analysis page
+    st.markdown("""
+        <style>
+        body {background-color: #333; color: #FFF;}
+        .stButton>button {background-color: #555; color: #FFF;}
+        </style>
+    """, unsafe_allow_html=True)
+elif page == "Trending Topics":
+    trending_topics_page()      # Call the function that renders the Trending Topics page
+    st.markdown("""
+        <style>
+        body {background-color: #FFF; color: #000;}
+        .stButton>button {background-color: #4CAF50; color: #FFF;}
+        </style>
+    """, unsafe_allow_html=True)
 
 
-# Input fields for Reddit API credentials only if not using the default ones
-if not use_default_credentials:
-    client_id = st.text_input("Enter your Reddit Client ID:", type="password")
-    client_secret = st.text_input("Enter your Reddit Client Secret:", type="password")
-    user_agent = st.text_input("Enter your Reddit User Agent:")
-else:
-    client_id = client_secret = user_agent = None  # No need for manual input if using praw.ini
-
-# Input field for the subreddit and search query
-subreddit = st.text_input("Enter the subreddit (e.g., 'Python'):", key="subreddit")
-query = st.text_input("Enter a search query for posts:", key="query")
-
-# Input field for the number of posts to fetch
-limit = st.number_input("Number of posts to fetch:", min_value=1, max_value=100, value=10)
-
-# Fetch and analyze Reddit posts on button click
-if st.button("🔍 Fetch Posts and Analyze"):
-    # Check if credentials are provided correctly based on the checkbox state
-    if use_default_credentials or (client_id and client_secret and user_agent):
-        try:
-            # Initialize Reddit client, passing credentials if not using the default
-            if use_default_credentials:
-                reddit_client = RedditClient()  # Use default credentials from praw.ini
-            else:
-                reddit_client = RedditClient(client_id, client_secret, user_agent)  # Use provided credentials
-
-            # Fetch posts
-            posts, upvotes = reddit_client.fetch_posts(subreddit, limit)
-
-            if posts:
-                st.success("Posts récupérés avec succès!")
-                sentiments = []
-                for post in posts:
-                    st.write(f"- {post}")
-                    sentiment_score = analyzer.analyze_sentiment(post)
-                    st.write(f"Sentiment Score: {sentiment_score}")
-                    sentiments.append(sentiment_score)
-
-                # Plot sentiment distribution
-                st.write("Sentiment Distribution:")
-                plt.hist(sentiments, bins=20, color='skyblue', edgecolor='black')
-                plt.title("Sentiment Score Distribution")
-                plt.xlabel("Sentiment Score")
-                plt.ylabel("Frequency")
-                st.pyplot()
-
-                # Generate and display the word cloud
-                st.write("Word Cloud:")
-                visualizer.generate_word_cloud(posts)
-                st.pyplot()
-
-                # Plot upvote distribution
-                st.write("Upvote Distribution:")
-                visualizer.plot_upvote_distribution(upvotes)
-                st.pyplot()
-
-            else:
-                st.error("No posts found or unable to fetch data.")
-        except ValueError as e:
-            st.error(e)
-    else:
-        st.write("Please enter all required Reddit API credentials and subreddit details.")
-
+# Optional: You can include any common footer or disclaimers here if needed
+st.sidebar.markdown("---")
+st.sidebar.write("© 2024 Reddit Posts Analysis V1 - All rights reserved.")
