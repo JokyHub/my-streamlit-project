@@ -6,11 +6,23 @@ from src.sentiment_analyzer import SentimentAnalyzer
 from src.visualization import Visualizer
 import matplotlib.pyplot as plt
 import os
+import plotly.express as px
+import plotly.graph_objects as go
 from dotenv import load_dotenv
 
 # Load environment variables (Optional: if you still want to use .env as a fallback)
 load_dotenv()
-
+# Function to load custom CSS
+def load_css():
+    # Path to the CSS file
+    css_path = "src/styles.css"  
+    
+    # Load the CSS file
+    with open(css_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        
+# Call the function to load the CSS
+load_css()
 # Initialize sentiment analyzer and visualizer
 analyzer = SentimentAnalyzer()
 visualizer = Visualizer()
@@ -21,6 +33,7 @@ use_default_credentials = st.checkbox("Use default credentials from praw.ini")
 # App layout
 st.title("Reddit Sentiment Analysis Dashboard")
 st.write("Welcome to the Sentiment Analysis Dashboard. This app fetches posts from Reddit and analyzes their sentiments.")
+
 
 # Input fields for Reddit API credentials only if not using the default ones
 if not use_default_credentials:
@@ -38,7 +51,7 @@ query = st.text_input("Enter a search query for posts:", key="query")
 limit = st.number_input("Number of posts to fetch:", min_value=1, max_value=100, value=10)
 
 # Fetch and analyze Reddit posts on button click
-if st.button("Fetch Posts and Analyze"):
+if st.button("🔍 Fetch Posts and Analyze"):
     # Check if credentials are provided correctly based on the checkbox state
     if use_default_credentials or (client_id and client_secret and user_agent):
         try:
@@ -52,7 +65,7 @@ if st.button("Fetch Posts and Analyze"):
             posts, upvotes = reddit_client.fetch_posts(subreddit, limit)
 
             if posts:
-                st.write("Fetched Reddit Posts:")
+                st.success("Posts récupérés avec succès!")
                 sentiments = []
                 for post in posts:
                     st.write(f"- {post}")
@@ -79,8 +92,9 @@ if st.button("Fetch Posts and Analyze"):
                 st.pyplot()
 
             else:
-                st.write("No posts found or unable to fetch data.")
+                st.error("No posts found or unable to fetch data.")
         except ValueError as e:
             st.error(e)
     else:
         st.write("Please enter all required Reddit API credentials and subreddit details.")
+

@@ -1,0 +1,26 @@
+<!-- src/styles.css -->
+<style>
+body {
+    background-color: #F4F4F9;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+.stButton > button {
+    background-color: #FF4B4B;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.stTitle {
+    color: #31333F;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.stExpander {
+    border: 1px solid #FF4B4B;
+}
+</style>
