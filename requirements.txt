@@ -1,0 +1,7 @@
+streamlit
+praw
+spacy
+textblob
+matplotlib
+wordcloud
+python-dotenv
