@@ -19,7 +19,7 @@
 
 ## **Project Overview**
 
-The **Reddit Sentiment Analysis Dashboard** is a streamlit web application that fetches Reddit posts and analyzes their sentiments using advanced NLP techniques. The app provides insights into trending topics, visualizes sentiment distributions, and highlights key themes through word clouds. It's designed for data enthusiasts, researchers, and marketers who want to analyze Reddit content interactively.
+The **Reddit Sentiment Analysis Dashboard** is a streamlit web application that fetches Reddit posts and analyzes their sentiments using advanced NLP techniques. The app provides insights into trending topics, visualizes sentiment distributions, and highlights key themes through word clouds. It's designed to let you explore the topics using the default credentials even if you do not have developer credentials.
 
 ## **Features**
 
