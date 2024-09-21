@@ -6,8 +6,6 @@ from src.sentiment_analyzer import SentimentAnalyzer
 from src.visualization import Visualizer
 import matplotlib.pyplot as plt
 import os
-import plotly.express as px
-import plotly.graph_objects as go
 from dotenv import load_dotenv
 from pages.sentiment_page import sentiment_analysis_page  
 from pages.trend_page import trending_topics_page 
