@@ -43,7 +43,7 @@ The **Reddit Sentiment Analysis Dashboard** is a streamlit web application that 
 
 - Python 3.8+
 - Git
-- Docker (Optional, for containerization)
+- Docker (for containerization)
 
 ### **Clone the Repository**
 
