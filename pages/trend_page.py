@@ -11,7 +11,8 @@ import plotly.graph_objects as go
 from dotenv import load_dotenv
 
 def trending_topics_page():
-# Load environment variables (Optional: if you still want to use .env as a fallback)
+    """Function to analyse the trending topics based on the query"""
+    # Load environment variables (Optional: if you still want to use .env as a fallback)
     load_dotenv()
     # Set up the checkbox to use default credentials
     use_default_credentials = st.checkbox("Use default credentials from praw.ini")

@@ -9,14 +9,15 @@ import os
 import plotly.express as px
 import plotly.graph_objects as go
 from dotenv import load_dotenv
-
+import time
 
 # Initialize sentiment analyzer and visualizer
 analyzer = SentimentAnalyzer()
 visualizer = Visualizer()
 
 def sentiment_analysis_page():
-# Load environment variables (Optional: if you still want to use .env as a fallback)
+    """Function to analyse the sentiment of the Reddit posts"""
+    # Load environment variables (Optional: if you still want to use .env as a fallback)
     load_dotenv()
     # Set up the checkbox to use default credentials
     use_default_credentials = st.checkbox("Use default credentials from praw.ini")
@@ -43,6 +44,8 @@ def sentiment_analysis_page():
     st.subheader("Analyze Reddit Posts")
     # Fetch and analyze Reddit posts on button click
     if st.button("🔍 Fetch Posts and Analyze"):
+        with st.spinner("Fetching data, please wait..."):
+            time.sleep(2)
         # Check if credentials are provided correctly based on the checkbox state
         if use_default_credentials or (client_id and client_secret and user_agent):
             try:

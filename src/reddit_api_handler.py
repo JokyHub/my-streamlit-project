@@ -17,7 +17,7 @@ class RedditClient:
             self.reddit = praw.Reddit()  # This will look for credentials in praw.ini
 
     def fetch_posts(self, subreddit, limit=10):
-        """Fetch trending posts from a given subreddit."""
+        """Function to Fetch trending posts from a given subreddit."""
         posts = []
         upvotes = []
         try:
@@ -29,7 +29,7 @@ class RedditClient:
         except Exception as e:
             raise ValueError(f"Failed to fetch posts: {e}")
     def fetch_trending_topics(self, limit=10):
-        """Fetch trending subreddits or posts on Reddit."""
+        """Funtion to Fetch trending subreddits or posts on Reddit."""
         trending_topics = []
         try:
             # Using Reddit's popular subreddits feature

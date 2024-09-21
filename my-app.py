@@ -14,6 +14,7 @@ from pages.trend_page import trending_topics_page
 load_dotenv()
 # Load custom CSS file
 def load_css():
+    """Loading the style.css file defined."""
     with open("src/styles.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
