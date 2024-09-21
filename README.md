@@ -48,5 +48,5 @@ The **Reddit Sentiment Analysis Dashboard** is a streamlit web application that 
 ### **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/reddit-sentiment-analysis-dashboard.git
-cd reddit-sentiment-analysis-dashboard
+git clone https://github.com/JokyHub/my-streamlit-project.git
+cd my-streamlit-project
